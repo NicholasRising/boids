@@ -37,6 +37,16 @@ impl Bird {
     pub fn fly(&mut self) {
         self.x += self.heading.cos() * BIRD_SPEED;
         self.y += self.heading.sin() * BIRD_SPEED;
+        if self.x < 0.0 {
+            self.x = WIDTH - 1.0;
+        } else if self.x >= WIDTH {
+            self.x = 0.0;
+        }
+        if self.y < 0.0 {
+            self.y = HEIGHT - 1.0;
+        } else if self.y >= HEIGHT {
+            self.y = 0.0;
+        }
     }
 }
 
