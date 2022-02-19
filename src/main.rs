@@ -7,13 +7,13 @@ const HEIGHT: f64 = 1000.0;
 const FPS: f64 = 60.0;
 
 const BIRD_COUNT: usize = 50;
-
 const BIRD_SHAPE: [[f64; 2]; 4] = [
-    [  0.0,  0.0],
-    [-10.0, -5.0],
-    [  0.0, 15.0],
-    [ 10.0, -5.0]
+    [  0.0,   0.0],
+    [-20.0, -10.0],
+    [-15.0,   0.0],
+    [-20.0,  10.0]
 ];
+const BIRD_SPEED: f64 = 1.0;
 
 const BIRD_COLOR: &str = "1e508c";
 const BG_COLOR: &str = "000000";
@@ -32,6 +32,11 @@ impl Bird {
             y: random::<f64>() * HEIGHT,
             heading: random::<f64>() * (std::f64::consts::PI * 2.0)
         }
+    }
+
+    pub fn fly(&mut self) {
+        self.x += self.heading.cos() * BIRD_SPEED;
+        self.y += self.heading.sin() * BIRD_SPEED;
     }
 }
 
@@ -69,6 +74,7 @@ fn main() {
                 timer = u.dt;
                 for bird in birds.iter_mut() {
                     bird.heading = (bird.heading + std::f64::consts::PI / 360.0) % (std::f64::consts::PI * 2.0);
+                    bird.fly();
                 }
             } else {
                 timer += u.dt;
